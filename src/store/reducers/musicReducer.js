@@ -2,15 +2,15 @@
 import actionTypes from '../actions/actionTypes';
 
 const initState = {
-    banner: [],
+    curSongId: null,
 };
 
-const appReducer = (state = initState, action) => {
+const musicReducer = (state = initState, action) => {
     switch (action.type) {
-        case actionTypes.GET_HOME:
+        case actionTypes.SET_CUR_SONG_ID:
             return {
                 ...state,
-                banner: action.homeData?.find((item) => item.sectionType === 'banner')?.items || null,
+                curSongId: action.sid || null,
             };
 
         default:
@@ -18,4 +18,4 @@ const appReducer = (state = initState, action) => {
     }
 };
 
-export default appReducer;
+export default musicReducer;
