@@ -15,9 +15,7 @@ const {
 } = icons;
 
 const Player = () => {
-    const audioEl = new Audio(
-        'https://mp3-s1-zmp3.zmdcdn.me/24669f8da3ce4a9013df/812402232419767419?authen=exp=1684923238~acl=/24669f8da3ce4a9013df/*~hmac=ac61ccb3c17750ae4365034674b120dd&fs=MTY4NDmUsIC1MDQzODE5OXx3ZWJWNnwwfDMdUngODEdUngMjmUsICdUngMTU4',
-    );
+    const audioEl = new Audio();
 
     const { curSongId, isPlaying } = useSelector((state) => state.music);
 
@@ -25,14 +23,14 @@ const Player = () => {
 
     const [source, setSource] = useState(null);
 
-    console.log(audioEl.get);
+    // console.log(audioEl);
 
     // const [isPlaying, setIsPlaying] = useState(false);
 
     //useEffect khong dung async dc, vi no bat tat ca dong bo
     useEffect(() => {
         const fetchDetailSong = async () => {
-            const [res1, res2] = await Promise.all([apis.getDetailSong(curSongId), apis.getSong(curSongId)]);
+            const [res1, res2] = await Promise.all([apis.apiGetDetailSong(curSongId), apis.apiGetSong(curSongId)]);
 
             if (res1.data.err === 0) {
                 setSongInfo(res1.data.data);

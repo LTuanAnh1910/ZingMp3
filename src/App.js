@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux/es/exports';
 
-import { Home, Login, Public, Personal } from './containers/public';
+import { Home, Login, Public, Personal, Album } from './containers/public';
 import path from './ultis/path';
 import * as actions from './store/actions';
 
@@ -23,6 +23,8 @@ function App() {
                         <Route path={path.HOME} element={<Home />} />
                         <Route path={path.LOGIN} element={<Login />} />
                         <Route path={path.MY_MUSIC} element={<Personal />} />
+                        <Route path={path.ALBUM__TITLE_PID} element={<Album />} />
+                        <Route path={path.PLAYLIST__TITLE_PID} element={<Album />} />
 
                         <Route path={path.STAR} element={<Home />} />
                     </Route>

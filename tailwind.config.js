@@ -8,14 +8,14 @@ module.exports = {
                 'main-200': '#00000080',
                 'main-300': '#000000cc',
                 'main-400': '#181818',
-                'main-500': '#0E8080',
+                'main-500': '#9b4de0',
             },
             colors: {
                 'main-100': '#0000001a',
                 'main-200': '#00000080',
                 'main-300': '#000000cc',
                 'main-400': '#181818',
-                'main-500': '#0E8080',
+                'main-500': '#9b4de0',
             },
             keyframes: {
                 'slide-right': {
@@ -53,6 +53,9 @@ module.exports = {
                 'slide-right': 'slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
                 'slide-left': 'slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
                 'slide-left2': 'slide-left2 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
+            },
+            flex: {
+                4: '4 4 0%',
             },
         },
         screens: {

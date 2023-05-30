@@ -5,6 +5,7 @@ import { HiArrowSmallLeft, HiArrowSmallRight } from 'react-icons/hi2';
 import { BsSearch, BsPlayCircle, BsPauseCircle } from 'react-icons/bs';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { CiRepeat, CiShuffle } from 'react-icons/ci';
+import { CgMusic } from 'react-icons/cg';
 
 const icons = {
     MdOutlineLibraryMusic,
@@ -23,6 +24,7 @@ const icons = {
     MdSkipNext,
     MdSkipPrevious,
     CiShuffle,
+    CgMusic,
 };
 
 export default icons;
