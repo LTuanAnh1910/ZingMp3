@@ -1,11 +1,22 @@
 import icons from '../ultis/icons';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import * as actions from '../store/actions';
+import { memo } from 'react';
 
+const { CgMusic } = icons;
 const List = ({ songData }) => {
-    console.log(songData);
-    const { CgMusic } = icons;
+    const dispatch = useDispatch();
+    // console.log(songData);
     return (
-        <div className="flex justify-between items-center p-[10px] cursor-pointer whitespace-nowrap position: relative overflow-y-auto ">
+        <div
+            className="flex justify-between items-center p-[10px]  whitespace-nowrap position: relative overflow-y-auto border-0 border-t border-[#404040] hover:bg-[#404040]"
+            onClick={() => {
+                dispatch(actions.setCurSongId(songData.encodeId));
+                dispatch(actions.play(true));
+                dispatch(actions.playAlbum(true));
+            }}
+        >
             <div className="flex items-center gap-3 flex-1 ">
                 <span>
                     <CgMusic />
@@ -15,7 +26,7 @@ const List = ({ songData }) => {
                     <span className="text-sm font-semibold text-[#FFFFFF] ">{`${
                         songData.title?.length > 20 ? `${songData.title?.slice(0, 20)}...` : songData.title
                     }`}</span>
-                    <span className="text-[12px] font-semibold text-[#FFFFFF80] hover:text-main-500 ">
+                    <span className="text-[12px] font-semibold text-[#FFFFFF80] hover:text-main-500 cursor-pointer">
                         {`${
                             songData?.album?.title?.length > 20
                                 ? `${songData.artistsNames?.slice(0, 20)}...`
@@ -24,8 +35,7 @@ const List = ({ songData }) => {
                     </span>
                 </div>
             </div>
-            <div className="flex-1 flex justify-center items-center position: absolute left-[45%] hover:text-main-500 ">
-                {}
+            <div className="flex-1 flex justify-center items-center position: absolute left-[45%] hover:text-main-500 text-[#FFFFFF80] cursor-pointer">
                 {`${
                     songData?.album?.title?.length > 20
                         ? `${songData?.album?.title?.slice(0, 20)}...`
@@ -37,4 +47,4 @@ const List = ({ songData }) => {
     );
 };
 
-export default List;
+export default memo(List);

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Header, Slider } from '../../components';
+import { Slider, Section } from '../../components';
 
 function Home() {
     return (
         <div className="overflow-y-auto  ">
             <Slider />
+            <Section />
         </div>
     );
 }

@@ -1,27 +1,31 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { resolvePath, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import * as apis from '../../apis';
 import moment from 'moment';
 import { Lists } from '../../components';
+import { useDispatch } from 'react-redux';
+import Scrollbars from 'react-custom-scrollbars-2';
+import * as actions from '../../store/actions';
 
 const Album = () => {
     const { pid } = useParams();
     const [playlistData, setPlayListData] = useState({});
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchDetailPlaylist = async () => {
             const response = await apis.apiGetDetailPlaylist(pid);
             if (response?.data.err === 0) {
                 setPlayListData(response?.data.data);
-                console.log(response);
+                dispatch(actions.setPlaylist(response?.data?.data?.song?.items));
             }
         };
         fetchDetailPlaylist();
     }, [pid]);
     return (
-        <div className="flex gap-8 w-full px-[59px]">
-            <div className="flex-none w-1/4 border border-red-500 flex flex-col items-center gap-1">
+        <div className="flex gap-8 w-full h-full px-[59px]">
+            <div className="flex-none w-1/4   flex flex-col items-center gap-1">
                 <img
                     src={playlistData?.thumbnailM}
                     alt="thumbnail"
@@ -43,14 +47,16 @@ const Album = () => {
                     )}K người yêu thích`}</span>
                 </div>
             </div>
-            <div className="flex-auto border border-blue-500 overflow-y-scroll">
-                <span className="flex gap-1 text-[14px] ">
-                    <span className="text-[#FFFFFF80]">Lời tựa </span>
-                    <span className="text-[#FFFFFF]">{playlistData?.sortDescription}</span>
-                </span>
-                {/* truyền xuống thằng con bằng destructuring để component thằng con nhận được */}
-                <Lists songs={playlistData?.song?.items} totalDuration={playlistData?.song?.totalDuration} />
-            </div>
+            <Scrollbars style={{ width: '100%', height: '80%' }}>
+                <div className="flex-auto  mb-40">
+                    <span className="flex gap-1 text-[14px] ">
+                        <span className="text-[#FFFFFF80]">Lời tựa </span>
+                        <span className="text-[#FFFFFF]">{playlistData?.sortDescription}</span>
+                    </span>
+                    {/* truyền xuống thằng con bằng destructuring để component thằng con nhận được */}
+                    <Lists totalDuration={playlistData?.song?.totalDuration} />
+                </div>
+            </Scrollbars>
         </div>
     );
 };
