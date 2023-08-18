@@ -6,10 +6,12 @@ import { useSelector } from 'react-redux';
 import * as actions from '../store/actions';
 import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
+import LoadingSong from './LoadingSong';
 
 var intervalId;
 
 const {
+    BsMusicNoteList,
     AiOutlineHeart,
     BiDotsHorizontalRounded,
     MdSkipPrevious,
@@ -18,18 +20,22 @@ const {
     BsPlayCircle,
     BsPauseCircle,
     CiShuffle,
+    RiRepeatOneFill,
+    SlVolume2,
+    SlVolumeOff,
+    SlVolume1,
 } = icons;
 
-const Player = () => {
+const Player = ({ setIsShowRightSidebar }) => {
     const { curSongId, isPlaying, songs } = useSelector((state) => state.music);
 
     const [songInfo, setSongInfo] = useState(null);
-
     const [audio, setAudio] = useState(new Audio());
-
     const [curSeconds, setCurSeconds] = useState(0);
     const [isShuffle, setIsShuffle] = useState(false);
-    const [isRepeat, setIsRepeat] = useState(false);
+    const [repeatMode, setRepeatMode] = useState(0);
+    const [isLoadedSource, setIsLoadedSource] = useState(true);
+    const [volume, setVolume] = useState(100);
 
     const dispatch = useDispatch();
 
@@ -37,12 +43,13 @@ const Player = () => {
 
     const trackRef = useRef();
 
+    //auto next song when ended song
     useEffect(() => {
         const handleEnded = () => {
             if (isShuffle) {
                 handleShuffle();
-            } else if (isRepeat) {
-                handleNextSong();
+            } else if (repeatMode) {
+                repeatMode === 1 ? handleRepeatOne() : handleNextSong();
             } else {
                 audio.pause();
                 dispatch(actions.play(false));
@@ -52,12 +59,16 @@ const Player = () => {
         return () => {
             audio.removeEventListener('ended', handleEnded);
         };
-    }, [audio, isShuffle, isRepeat]);
+    }, [audio, isShuffle, repeatMode]);
 
-    //useEffect khong dung async dc, vi no bat tat ca dong bo
     useEffect(() => {
         const fetchDetailSong = async () => {
+            //hien thi icon load khi doi api
+            setIsLoadedSource(false);
+            //call api
             const [res1, res2] = await Promise.all([apis.apiGetDetailSong(curSongId), apis.apiGetSong(curSongId)]);
+            //tat icon load khi goi xong api
+            setIsLoadedSource(true);
 
             if (res1.data.err === 0) {
                 setSongInfo(res1.data.data);
@@ -94,6 +105,10 @@ const Player = () => {
             }, 200);
         }
     }, [audio]);
+
+    useEffect(() => {
+        audio.volume = volume / 100;
+    }, [volume]);
 
     //handle click pause and play
     const handleTogglePlayMusic = async () => {
@@ -140,7 +155,11 @@ const Player = () => {
         const randomIndex = Math.round(Math.random() * songs?.length) - 1;
         dispatch(actions.setCurSongId(songs[randomIndex].encodeId));
         dispatch(actions.play(true));
-        setIsShuffle((prev) => !prev);
+    };
+
+    const handleRepeatOne = () => {
+        audio.play();
+        dispatch(actions.play(true));
     };
 
     return (
@@ -172,18 +191,24 @@ const Player = () => {
                     <span onClick={handlePrevSong} className={`${!songs ? 'text-gray-500' : 'cursor-pointer'}`}>
                         <MdSkipPrevious size={26} />
                     </span>
-                    <span className="hover:text-violet-500" onClick={handleTogglePlayMusic}>
-                        {isPlaying ? <BsPauseCircle size={30} /> : <BsPlayCircle size={30} />}
+                    <span className="hover:text-violet-500 " onClick={handleTogglePlayMusic}>
+                        {!isLoadedSource ? (
+                            <LoadingSong />
+                        ) : isPlaying ? (
+                            <BsPauseCircle size={30} />
+                        ) : (
+                            <BsPlayCircle size={30} />
+                        )}
                     </span>
                     <span className={`${!songs ? 'text-gray-500' : 'cursor-pointer'}`} onClick={handleNextSong}>
                         <MdSkipNext size={26} />
                     </span>
                     <span
                         title="Bật phát tất cả"
-                        className={`cursor-pointer ${isRepeat && 'text-purple-600  '}`}
-                        onClick={() => setIsRepeat((prev) => !prev)}
+                        className={`cursor-pointer ${repeatMode && 'text-purple-600  '}`}
+                        onClick={() => setRepeatMode((prev) => (prev === 2 ? 0 : prev + 1))}
                     >
-                        <CiRepeat size={26} />
+                        {repeatMode === 1 ? <RiRepeatOneFill size={24} /> : <CiRepeat size={24} />}
                     </span>
                 </div>
                 <div className="w-full flex items-center justify-center gap-2 text-xs font-bold">
@@ -203,7 +228,28 @@ const Player = () => {
                     </span>
                 </div>
             </div>
-            <div className="w-[30%] flex-auto border border-red-500">Volume</div>
+            <div className="w-[30%] flex-auto flex items-center justify-end gap-4">
+                <div className="flex gap-2 items-center ">
+                    <span onClick={() => setVolume((prev) => (+prev === 0 ? 70 : 0))}>
+                        {+volume >= 50 ? <SlVolume2 /> : +volume === 0 ? <SlVolumeOff /> : <SlVolume1 />}
+                    </span>
+                    <input
+                        class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer "
+                        type="range"
+                        step={1}
+                        min={0}
+                        max={100}
+                        value={volume}
+                        onChange={(e) => setVolume(e.target.value)}
+                    />
+                </div>{' '}
+                <span
+                    className="p-1 rounded-sm cursor-pointer bg-main-500 opacity-90 hover:opacity-100"
+                    onClick={() => setIsShowRightSidebar((prev) => !prev)}
+                >
+                    <BsMusicNoteList size={20} className="text-[#ffffff]" />
+                </span>
+            </div>
         </div>
     );
 };

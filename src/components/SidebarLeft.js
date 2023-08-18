@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'; // hook dùng để chuyển trang
 import path from '../ultis/path';
 
-const notActiveStyle = 'py-2 px-[25px] font-bold text-[13px] text-[#dadada] flex gap-[12px] items-center';
+const notActiveStyle = 'py-2 px-[25px] font-bold text-[13px] text-[#a0a0a0] flex gap-[12px] items-center';
 const activeStyle = 'py-2 px-[25px] font-bold text-[13px] text-[#FFFFFF] flex gap-[12px] items-center';
 
 function SidebarLeft() {
@@ -17,7 +17,7 @@ function SidebarLeft() {
             >
                 <img src={logo} alt="logo" className="w-[120px] h-10" />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col  gap-2 ">
                 {sidebarMenu.map((item) => (
                     <NavLink
                         to={item.path}
@@ -26,7 +26,7 @@ function SidebarLeft() {
                         end={item.end}
                     >
                         {item.icons}
-                        <span>{item.text}</span>
+                        <span className="hover:text-[#ffffff]">{item.text}</span>
                     </NavLink>
                 ))}
             </div>
