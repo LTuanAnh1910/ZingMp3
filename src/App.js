@@ -34,10 +34,10 @@ function App() {
                     <Route path={path.PUBLiC} element={<Public />}>
                         <Route path={path.HOME} element={<Home />} />
                         <Route path={path.LOGIN} element={<Login />} />
-                        <Route path={path.MY_MUSIC} element={<Personal />} />
+                        <Route path={path.MY_MUSIC} element={<Home />} />
                         <Route path={path.ALBUM__TITLE_PID} element={<Album />} />
                         <Route path={path.PLAYLIST__TITLE_PID} element={<Album />} />
-                        <Route path={path.WEEKRANK__TITLE_PID} element={<WeekRank />} />
+                        <Route path={path.WEEKRANK__TITLE_PID} element={<Home />} />
                         <Route path={path.HOME_SINGER} element={<Singer />} />
                         <Route path={path.HOME_ARTIST_SINGER} element={<Singer />} />
                         <Route path={path.SEARCH} element={<Search />}>
