@@ -9,7 +9,7 @@ function Public() {
     const [isShowRightSidebar, setIsShowRightSidebar] = useState(true);
     const { isLoading } = useSelector((state) => state.app);
     return (
-        <div className="w-full relative h-screen flex flex-col  text-[#dadada]">
+        <div className="w-full relative h-screen flex flex-col  text-[#dadada] bg-main-400">
             <div className="w-full h-full flex flex-auto ">
                 <div className="w-[240px] h-full bg-main-300 text-sm  flex-none ">
                     <SidebarLeft />
@@ -25,13 +25,13 @@ function Public() {
                         <Header />
                     </div>
                     <div className="flex-auto w-full">
-                        <Scrollbars style={{ width: ' 100%', height: '100%' }}>
+                        <Scrollbars autoHide style={{ width: ' 100%', height: '100%' }}>
                             <Outlet />
                         </Scrollbars>
                     </div>
                 </div>
                 {isShowRightSidebar && (
-                    <div className=" w-[329px] hidden screen-1400:flex flex-none border  border-green-500 animate-slide-left bg-main-400">
+                    <div className=" w-[329px] hidden screen-1400:flex flex-none h-screen  animate-slide-left bg-main-400">
                         <SidebarRight />
                     </div>
                 )}

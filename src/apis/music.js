@@ -41,3 +41,49 @@ export const apiGetDetailPlaylist = (pid) =>
             reject(error);
         }
     });
+
+export const apiSearch = (keyword) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios({
+                url: '/search',
+                method: 'get',
+                params: { keyword },
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+export const apiGetArtistSongs = (singerId) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios({
+                url: '/artistsong',
+                method: 'get',
+                params: {
+                    id: singerId,
+                    page: 1,
+                    count: 50,
+                },
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+export const apiGetArtits = (alias) =>
+    new Promise(async (resolve, reject) => {
+        try {
+            const response = await axios({
+                url: '/artist',
+                method: 'get',
+                params: {
+                    name: alias,
+                },
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });

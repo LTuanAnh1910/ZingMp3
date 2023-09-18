@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Section = ({ data }) => {
     const navigate = useNavigate();
-    console.log(data);
+    // console.log(data);
     return (
         <div className="mt-12 px-[59px] flex flex-col gap-5">
             <div className="flex items-center justify-between">
@@ -23,13 +23,15 @@ const Section = ({ data }) => {
                         >
                             <img src={item?.thumbnailM} alt="thumb" className="w-full object-contain rounded-lg" />
                             <span className="flex flex-col">
-                                <span className="text-[#FFFFFF] font-bold">{item.title} </span>
+                                <span className="text-[#FFFFFF] font-bold">{`${
+                                    item.title?.length > 28 ? `${item.title?.slice(0, 26)} ...` : item.title
+                                }`}</span>
                                 {data?.sectionId === 'h100' ? (
                                     <span>{item?.artistsNames}</span>
                                 ) : (
                                     <span>{`${
                                         item.sortDescription?.length > 44
-                                            ? `${item.sortDescription?.slice(0, 44)}...`
+                                            ? `${item.sortDescription?.slice(0, 60)} `
                                             : item.sortDescription
                                     }`}</span>
                                 )}

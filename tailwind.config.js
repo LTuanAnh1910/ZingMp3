@@ -94,11 +94,16 @@ module.exports = {
             },
             flex: {
                 4: '4 4 0%',
+                3: '3 3 0%',
+                6: '6 6 0%',
+                7: '7 7 0%',
             },
         },
         screens: {
             'screen-1400': '1400px',
+            'screen-1600': '1600px',
         },
     },
-    plugins: [],
+    plugins: [require('tailwindcss-textshadow')],
+    mode: 'jit',
 };

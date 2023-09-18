@@ -10,6 +10,11 @@ const initState = {
     hAlbum: {},
     hLiveRadio: {},
     isLoading: false,
+    newRelease: {},
+    weekChart: [],
+    favoritedArtist: {},
+    chart: {},
+    rank: [],
 };
 
 const appReducer = (state = initState, action) => {
@@ -24,6 +29,11 @@ const appReducer = (state = initState, action) => {
                 h100: action.homeData?.find((item) => item.sectionId === 'h100') || {},
                 hAlbum: action.homeData?.find((item) => item.sectionId === 'hAlbum') || {},
                 hLiveRadio: action.homeData?.find((item) => item.sectionId === 'hLiveRadio') || {},
+                newRelease: action.homeData?.find((item) => item.sectionType === 'new-release') || {},
+                weekChart: action.homeData?.find((item) => item.sectionType === 'weekChart')?.items || [],
+                favoritedArtist: action.homeData?.find((item) => item.sectionId === 'hArtistTheme') || {},
+                chart: action.homeData?.find((item) => item.sectionId === 'hZC')?.chart || {},
+                rank: action.homeData?.find((item) => item.sectionId === 'hZC')?.items || [],
             };
 
         case actionTypes.LOADING:

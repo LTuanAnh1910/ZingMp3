@@ -2,12 +2,21 @@ import { MdOutlineLibraryMusic, MdMultilineChart, MdSkipNext, MdSkipPrevious } f
 import { BiDisc, BiDotsHorizontalRounded } from 'react-icons/bi';
 import { GiNotebook } from 'react-icons/gi';
 import { HiArrowSmallLeft, HiArrowSmallRight } from 'react-icons/hi2';
-import { BsSearch, BsPlayCircle, BsPauseCircle, BsDot, BsMusicNoteList } from 'react-icons/bs';
+import {
+    BsSearch,
+    BsPlayCircle,
+    BsPauseCircle,
+    BsDot,
+    BsMusicNoteList,
+    BsTrash3,
+    BsFillPersonPlusFill,
+} from 'react-icons/bs';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { CiRepeat, CiShuffle } from 'react-icons/ci';
 import { CgMusic } from 'react-icons/cg';
 import { RiRepeatOneFill } from 'react-icons/ri';
 import { SlVolumeOff, SlVolume2, SlVolume1 } from 'react-icons/sl';
+import { GrClose } from 'react-icons/gr';
 
 const icons = {
     MdOutlineLibraryMusic,
@@ -33,6 +42,9 @@ const icons = {
     SlVolumeOff,
     SlVolume2,
     SlVolume1,
+    BsTrash3,
+    BsFillPersonPlusFill,
+    GrClose,
 };
 
 export default icons;

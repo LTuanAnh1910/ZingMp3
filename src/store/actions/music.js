@@ -25,21 +25,53 @@ export const loading = (flag) => ({
     flag,
 });
 
-// export const fetchDetailPlaylist = (pid) => async (dispatch) => {
-//     try {
-//         const response = await apis.apiGetDetailPlaylist(pid);
+export const setCurSongData = (data) => ({
+    type: actionTypes.SET_CUR_SONG_DATA,
+    data,
+});
 
-//         console.log(response);
-//         if (response?.data.err === 0) {
-//             dispatch({
-//                 type: actionTypes.PLAYLIST,
-//                 songs: response.data?.data?.song?.items,
-//             });
-//         }
-//     } catch (error) {
-//         dispatch({
-//             type: actionTypes.PLAYLIST,
-//             songs: null,
-//         });
-//     }
-// };
+export const setCurAlbumId = (pid) => ({
+    type: actionTypes.SET_CUR_ALBUM_ID,
+    pid,
+});
+
+export const setRecent = (data) => ({
+    type: actionTypes.SET_RECENT,
+    data,
+});
+
+export const search = (keyword) => async (dispatch) => {
+    try {
+        const response = await apis.apiSearch(keyword);
+
+        if (response.data.err === 0) {
+            dispatch({ type: actionTypes.SEARCH, data: response.data.data, keyword });
+        } else {
+            dispatch({ type: actionTypes.SEARCH, data: null });
+        }
+    } catch (error) {
+        dispatch({
+            type: actionTypes.SEARCH,
+            data: null,
+        });
+    }
+};
+
+export const getSearchSongs = (singerId) => async (dispatch) => {
+    try {
+        const response = await apis.apiGetArtistSongs(singerId);
+
+        // console.log(response);
+
+        if (response.data.err === 0) {
+            dispatch({ type: actionTypes.PLAYLIST, songs: response.data.data.items });
+        } else {
+            dispatch({ type: actionTypes.PLAYLIST, songs: null });
+        }
+    } catch (error) {
+        dispatch({
+            type: actionTypes.PLAYLIST,
+            data: null,
+        });
+    }
+};

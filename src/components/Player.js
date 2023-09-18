@@ -72,6 +72,7 @@ const Player = ({ setIsShowRightSidebar }) => {
 
             if (res1.data.err === 0) {
                 setSongInfo(res1.data.data);
+                dispatch(actions.setCurSongData(res1.data.data));
             }
             if (res2.data.err === 0) {
                 audio.pause();
@@ -137,6 +138,7 @@ const Player = ({ setIsShowRightSidebar }) => {
             });
             //gui id bai ke tiep len Redux
             dispatch(actions.setCurSongId(songs[currentSongIndex + 1].encodeId));
+            dispatch(actions.play(true));
         }
     };
     const handlePrevSong = () => {
@@ -147,7 +149,7 @@ const Player = ({ setIsShowRightSidebar }) => {
             });
             //gui id bai truoc len Redux
             dispatch(actions.setCurSongId(songs[currentSongIndex - 1].encodeId));
-            dispatch(actions.play(true));
+            dispatch(actions.play(false));
         }
     };
 
@@ -195,9 +197,9 @@ const Player = ({ setIsShowRightSidebar }) => {
                         {!isLoadedSource ? (
                             <LoadingSong />
                         ) : isPlaying ? (
-                            <BsPauseCircle size={30} />
+                            <BsPauseCircle size={32} />
                         ) : (
-                            <BsPlayCircle size={30} />
+                            <BsPlayCircle size={32} />
                         )}
                     </span>
                     <span className={`${!songs ? 'text-gray-500' : 'cursor-pointer'}`} onClick={handleNextSong}>
@@ -229,12 +231,12 @@ const Player = ({ setIsShowRightSidebar }) => {
                 </div>
             </div>
             <div className="w-[30%] flex-auto flex items-center justify-end gap-4">
-                <div className="flex gap-2 items-center ">
+                <div className="flex gap-2 items-center cursor-pointer ">
                     <span onClick={() => setVolume((prev) => (+prev === 0 ? 70 : 0))}>
                         {+volume >= 50 ? <SlVolume2 /> : +volume === 0 ? <SlVolumeOff /> : <SlVolume1 />}
                     </span>
                     <input
-                        class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer "
+                        class="w-full h-[2px] bg-gray-200 rounded-lg appearance-none cursor-pointer "
                         type="range"
                         step={1}
                         min={0}
