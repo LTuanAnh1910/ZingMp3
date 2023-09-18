@@ -79,14 +79,17 @@ const SidebarRight = () => {
             ) : (
                 <div className="w-full flex-auto flex-col flex px-2 ">
                     <Scrollbars autoHide style={{ width: ' 100%', height: '100%' }}>
-                        <SongItem
-                            thumbnail={curSongData?.thumbnail}
-                            title={curSongData?.title}
-                            artists={curSongData?.artistsNames}
-                            sid={curSongData?.encodeId}
-                            size="w-[40px] h-[40px]"
-                            style="bg-main-500"
-                        />
+                        {curSongData && (
+                            <SongItem
+                                thumbnail={curSongData?.thumbnail}
+                                title={curSongData?.title}
+                                artists={curSongData?.artistsNames}
+                                sid={curSongData?.encodeId}
+                                size="w-[40px] h-[40px]"
+                                style="bg-main-500"
+                            />
+                        )}
+
                         <div className="flex flex-col pt-[15px] px-2 pb-[5px]">
                             <span className="text-[#ffffff] text-sm font-bold">Tiếp theo</span>
                             <span className="text-[#ffffff80] text-xs flex gap-1">

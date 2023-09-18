@@ -8,6 +8,7 @@ import Scrollbars from 'react-custom-scrollbars-2';
 function Public() {
     const [isShowRightSidebar, setIsShowRightSidebar] = useState(true);
     const { isLoading } = useSelector((state) => state.app);
+    const { curSongId } = useSelector((state) => state.music);
     return (
         <div className="w-full relative h-screen flex flex-col  text-[#dadada] bg-main-400">
             <div className="w-full h-full flex flex-auto ">
@@ -36,9 +37,11 @@ function Public() {
                     </div>
                 )}
             </div>
-            <div className="fixed bottom-0 left-0 right-0 h-[90px] z-40">
-                <Player setIsShowRightSidebar={setIsShowRightSidebar} />
-            </div>
+            {curSongId && (
+                <div className="fixed bottom-0 left-0 right-0 h-[90px] z-40">
+                    <Player setIsShowRightSidebar={setIsShowRightSidebar} />
+                </div>
+            )}
         </div>
     );
 }
